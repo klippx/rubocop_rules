@@ -33,7 +33,7 @@ RSpec.describe RubocopRules::CLI do
 
       expect_any_instance_of(RubocopRules::CLI::Commands)
         .to receive(:insert_into_file)
-        .with('.rubocop.yml', '  - .rubocop_todo.yml', after: '  - .rubocop_common.yml\n')
+        .with('.rubocop.yml', '  - .rubocop_todo.yml', after: "  - .rubocop_common.yml\n")
 
       RubocopRules::CLI::Commands.start(['init'])
     end
