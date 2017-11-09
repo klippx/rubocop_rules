@@ -14,7 +14,7 @@ RSpec.configure do |config|
   config.disable_monkey_patching!
 
   config.around(:each, :silent) do |example|
-    capture(:stdout) { example.run }
+    capture_stdout { example.run }
   end
 
   config.expect_with :rspec do |c|
