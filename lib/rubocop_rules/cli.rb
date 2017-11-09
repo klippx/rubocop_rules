@@ -18,7 +18,7 @@ module RubocopRules
       def init
         copy_file '.rubocop_common.yml', '.rubocop_common.yml'
         copy_file '.rubocop.yml', '.rubocop.yml'
-        copy_file 'spec/rubocop_rules/lint_spec.rb', 'spec/lint_spec.rb'
+        copy_file 'spec/lint_spec.rb', 'spec/lint_spec.rb'
       end
 
       def self.source_root
