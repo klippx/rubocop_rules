@@ -27,6 +27,8 @@ Gem::Specification.new do |spec|
   spec.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
+  spec.files << 'spec/lint_spec.rb'
+
   spec.bindir        = 'bin'
   spec.executables   = spec.files.grep(%r{^bin/rubocop-rules}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
