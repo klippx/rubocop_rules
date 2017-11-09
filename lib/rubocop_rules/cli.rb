@@ -33,8 +33,6 @@ module RubocopRules
 
         print 'Adding rubocop_todo to configuration... '
         insert_into_file '.rubocop.yml', '  - .rubocop_todo.yml', after: "  - .rubocop_common.yml\n"
-
-        puts 'Done'
       end
 
       desc 'update', 'Regenerate RubocopRules configuration in your project'
@@ -49,8 +47,6 @@ module RubocopRules
         run_process(command: 'rubocop -a', silent: true)
         run_process(command: 'rubocop --auto-gen-config', silent: true)
         uncomment_lines '.rubocop.yml', /\.rubocop_todo\.yml/
-
-        puts 'Done'
       end
 
       private
