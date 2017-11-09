@@ -19,7 +19,7 @@ module RubocopRules
         puts RubocopRules::VERSION
       end
 
-      desc 'init', 'Initialize your project with RubocopRules'
+      desc 'init', 'Initialize RubocopRules in your project'
       def init
         puts 'Creating configuration...'
         copy_file '.rubocop_common.yml', '.rubocop_common.yml'
@@ -27,29 +27,38 @@ module RubocopRules
         copy_file 'spec/lint_spec.rb', 'spec/lint_spec.rb'
 
         print 'Autocorrecting your code... '
-        result = run_process('rubocop -a')
-        puts result.split("\n").last
+        run_process(command: 'rubocop -a')
 
         print 'Generating rubocop_todo... '
-        result = run_process('rubocop --auto-gen-config')
-        puts result.split("\n").last
+        run_process(command: 'rubocop --auto-gen-config')
+
+        puts "Done"
       end
 
-      desc 'update', 'Update your project with latest RubocopRules'
+      desc 'update', 'Regenerate RubocopRules configuration in your project'
       def update
+        puts 'Recreating configuration...'
+        remove_file '.rubocop_common.yml'
         copy_file '.rubocop_common.yml', '.rubocop_common.yml'
+
+        puts 'Regenerating rubocop_todo... '
+        remove_file '.rubocop_todo.yml'
+        run_process(command: 'rubocop -a', silent: true)
+        run_process(command: 'rubocop --auto-gen-config', silent: true)
+
+        puts "Done"
       end
 
       private
 
-      def run_process(command)
+      def run_process(command:, silent: false)
         output = ''
         Open3.popen2(command) do |stdin, stdout_stderr, wait_thr|
           stdin.close
           output = stdout_stderr.read
           wait_thr.value
         end
-        output
+        puts output.split("\n").last unless silent
       end
     end
   end

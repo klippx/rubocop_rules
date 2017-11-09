@@ -23,6 +23,14 @@ RSpec.describe RubocopRules::CLI do
         .to receive(:copy_file)
         .with('spec/lint_spec.rb', 'spec/lint_spec.rb')
 
+      expect_any_instance_of(RubocopRules::CLI::Commands)
+        .to receive(:run_process)
+        .with(command: 'rubocop -a')
+
+      expect_any_instance_of(RubocopRules::CLI::Commands)
+        .to receive(:run_process)
+        .with(command: 'rubocop --auto-gen-config')
+
       RubocopRules::CLI::Commands.start(['init'])
     end
   end
@@ -30,8 +38,24 @@ RSpec.describe RubocopRules::CLI do
   describe '$ rubocop-rules update', :silent do
     it 'copies rubocop_common' do
       expect_any_instance_of(RubocopRules::CLI::Commands)
+        .to receive(:remove_file)
+        .with('.rubocop_common.yml')
+
+      expect_any_instance_of(RubocopRules::CLI::Commands)
         .to receive(:copy_file)
         .with('.rubocop_common.yml', '.rubocop_common.yml')
+
+      expect_any_instance_of(RubocopRules::CLI::Commands)
+        .to receive(:remove_file)
+        .with('.rubocop_todo.yml')
+
+      expect_any_instance_of(RubocopRules::CLI::Commands)
+        .to receive(:run_process)
+        .with(command: 'rubocop -a', silent: true)
+
+      expect_any_instance_of(RubocopRules::CLI::Commands)
+        .to receive(:run_process)
+        .with(command: 'rubocop --auto-gen-config', silent: true)
 
       RubocopRules::CLI::Commands.start(['update'])
     end
