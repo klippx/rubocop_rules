@@ -1,0 +1,14 @@
+##############
+# Global rules
+AllCops:
+  Exclude:
+    - db/**/*
+
+Rails:
+  Enabled: false
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
+
+Metrics/LineLength:
+  Max: 100

@@ -1,30 +1,20 @@
 ###########################
 # Configuration for rubocop
 # in .rubocop.yml
-# Most of these are disabling existing cops, primarily
-# due to a smattering of different styles and loose
-# guidlines for contributions.
-#
-# Any of these may be changed.
 
 ##############
 # Global rules
+# see .rubocop_common.yml
 
-AllCops:
-  Exclude:
-    - db/**/*
+##############
+# Inherit default rules first, and then override those rules with
+# our violation whitelist.
+inherit_from:
+  - .rubocop_common.yml
+  - .rubocop_todo.yml
 
-Rails:
-  Enabled: false
-
-Style/SymbolArray:
-  EnforcedStyle: brackets
-
-Metrics/LineLength:
-  Max: 100
-
-Metrics/BlockLength:
-  Max: 25
-  Exclude:
-   - 'spec/**/*.rb'
-   - 'lib/ok_computer.rb'
+##############
+# Project specific overrides here, example:
+# Metrics/BlockLength:
+#   Exclude:
+#    - 'tasks/the_huge_task.rake'
