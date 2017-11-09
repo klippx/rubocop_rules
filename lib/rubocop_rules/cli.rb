@@ -2,6 +2,7 @@ require 'thor'
 
 module RubocopRules
   module CLI
+    # CLI for initializing a project with RubocopRules, and keeping it up to date
     class Commands < Thor
       include Thor::Actions
 
