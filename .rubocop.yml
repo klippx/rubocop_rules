@@ -1,0 +1,27 @@
+###########################
+# Configuration for rubocop
+# in .rubocop.yml
+# Most of these are disabling existing cops, primarily
+# due to a smattering of different styles and loose
+# guidlines for contributions.
+#
+# Any of these may be changed.
+
+##############
+# Global rules
+
+AllCops:
+  Exclude:
+    - db/**/*
+
+Rails:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 100
+
+Metrics/BlockLength:
+  Max: 25
+  Exclude:
+   - 'spec/**/*.rb'
+   - 'lib/ok_computer.rb'
