@@ -15,4 +15,5 @@ Metrics/LineLength:
 
 Metrics/BlockLength:
   Exclude:
+   - '*.gemspec'
    - 'spec/**/*.rb'
