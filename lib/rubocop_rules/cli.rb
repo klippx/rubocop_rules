@@ -21,6 +21,11 @@ module RubocopRules
         copy_file 'spec/lint_spec.rb', 'spec/lint_spec.rb'
       end
 
+      desc 'update', 'Update your project with latest RubocopRules'
+      def update
+        copy_file '.rubocop_common.yml', '.rubocop_common.yml'
+      end
+
       def self.source_root
         File.expand_path(File.join(File.dirname(__FILE__), '../..'))
       end
