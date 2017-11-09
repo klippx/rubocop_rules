@@ -1,4 +1,6 @@
-# Rubocop::Rules
+[![Build Status](https://travis-ci.org/klippx/rubocop_rules.svg?branch=master)](https://travis-ci.org/klippx/rubocop_rules)
+
+# RubocopRules
 
 A common place to house rubocop rule enforcement across projects.
 
