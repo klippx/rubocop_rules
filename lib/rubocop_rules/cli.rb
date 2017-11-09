@@ -21,7 +21,6 @@ module RubocopRules
 
       desc 'init', 'Initialize RubocopRules in your project'
       def init
-        puts 'Creating configuration...'
         copy_file '.rubocop_common.yml', '.rubocop_common.yml'
         copy_file '.rubocop.yml', '.rubocop.yml'
         copy_file 'spec/lint_spec.rb', 'spec/lint_spec.rb'
@@ -32,7 +31,10 @@ module RubocopRules
         print 'Generating rubocop_todo... '
         run_process(command: 'rubocop --auto-gen-config')
 
-        puts "Done"
+        print 'Adding rubocop_todo to configuration... '
+        insert_into_file '.rubocop.yml', '  - .rubocop_todo.yml', after: "  - .rubocop_common.yml\n"
+
+        puts 'Done'
       end
 
       desc 'update', 'Regenerate RubocopRules configuration in your project'
@@ -43,10 +45,12 @@ module RubocopRules
 
         puts 'Regenerating rubocop_todo... '
         remove_file '.rubocop_todo.yml'
+        comment_lines '.rubocop.yml', /\.rubocop_todo\.yml/
         run_process(command: 'rubocop -a', silent: true)
         run_process(command: 'rubocop --auto-gen-config', silent: true)
+        uncomment_lines '.rubocop.yml', /\.rubocop_todo\.yml/
 
-        puts "Done"
+        puts 'Done'
       end
 
       private
