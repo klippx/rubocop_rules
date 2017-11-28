@@ -28,7 +28,8 @@ module RubocopRules
         copy_file 'templates/.rubocop.yml', '.rubocop.yml'
         copy_file 'spec/lint_spec.rb', 'spec/lint_spec.rb'
 
-        ensure_rubosync_config && rubosync_common
+        ensure_rubosync_config
+        rubosync_common
 
         print 'Generating rubocop_todo...'
         generate_todo

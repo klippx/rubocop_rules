@@ -13,23 +13,29 @@ RSpec.describe RubocopRules::CLI do
     it 'copies rubocop_common', :silent do
       expect_any_instance_of(RubocopRules::CLI::Commands)
         .to receive(:copy_file)
-        .with('.rubocop_common.yml', '.rubocop_common.yml')
+        .with('templates/.rubosync.yml', '.rubosync.yml')
 
       expect_any_instance_of(RubocopRules::CLI::Commands)
         .to receive(:copy_file)
-        .with('.rubocop.yml', '.rubocop.yml')
+        .with('templates/.rubocop.yml', '.rubocop.yml')
 
       expect_any_instance_of(RubocopRules::CLI::Commands)
         .to receive(:copy_file)
         .with('spec/lint_spec.rb', 'spec/lint_spec.rb')
 
       expect_any_instance_of(RubocopRules::CLI::Commands)
-        .to receive(:run_process)
-        .with(command: 'rubocop -a')
+        .to receive(:ensure_rubosync_config)
+
+      expect_any_instance_of(RubocopRules::CLI::Commands)
+        .to receive(:rubosync_common)
 
       expect_any_instance_of(RubocopRules::CLI::Commands)
         .to receive(:run_process)
-        .with(command: 'rubocop --auto-gen-config')
+        .with(command: 'rubocop -a', silent: false)
+
+      expect_any_instance_of(RubocopRules::CLI::Commands)
+        .to receive(:run_process)
+        .with(command: 'rubocop --auto-gen-config', silent: false)
 
       expect_any_instance_of(RubocopRules::CLI::Commands)
         .to receive(:insert_into_file)
@@ -42,12 +48,14 @@ RSpec.describe RubocopRules::CLI do
   describe '$ rubocop-rules update', :silent do
     it 'copies rubocop_common' do
       expect_any_instance_of(RubocopRules::CLI::Commands)
+        .to receive(:ensure_rubosync_config)
+
+      expect_any_instance_of(RubocopRules::CLI::Commands)
         .to receive(:remove_file)
         .with('.rubocop_common.yml')
 
       expect_any_instance_of(RubocopRules::CLI::Commands)
-        .to receive(:copy_file)
-        .with('.rubocop_common.yml', '.rubocop_common.yml')
+        .to receive(:rubosync_common)
 
       expect_any_instance_of(RubocopRules::CLI::Commands)
         .to receive(:remove_file)
