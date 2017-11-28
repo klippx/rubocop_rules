@@ -7,6 +7,8 @@ adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.1.0] - 2017-11-28
+
 ### Added
 
 * Sync .rubocop_common.yml from external git repo
