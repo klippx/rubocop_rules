@@ -28,11 +28,10 @@ module RubocopRules
         copy_file 'templates/.rubocop.yml', '.rubocop.yml'
         copy_file 'spec/lint_spec.rb', 'spec/lint_spec.rb'
 
-        fetch_rubocop_common
+        ensure_rubosync_config && rubosync_common
 
         print 'Generating rubocop_todo...'
-        run_process(command: 'rubocop -a')
-        run_process(command: 'rubocop --auto-gen-config')
+        generate_todo
 
         puts 'Adding rubocop_todo to configuration... '
         insert_into_file '.rubocop.yml', '  - .rubocop_todo.yml', after: "  - .rubocop_common.yml\n"
@@ -41,28 +40,32 @@ module RubocopRules
       desc 'update', 'Regenerate RubocopRules configuration in your project'
       def update
         puts 'Recreating configuration...'
-        ensure_config
+        ensure_rubosync_config
         remove_file '.rubocop_common.yml'
-        fetch_rubocop_common
+        rubosync_common
 
         puts 'Regenerating rubocop_todo...'
         remove_file '.rubocop_todo.yml'
         comment_lines '.rubocop.yml', /\.rubocop_todo\.yml/
-        run_process(command: 'rubocop -a', silent: true)
-        run_process(command: 'rubocop --auto-gen-config', silent: true)
+        generate_todo(silent: true)
         uncomment_lines '.rubocop.yml', /\.rubocop_todo\.yml/
       end
 
       private
 
-      def ensure_config
+      def generate_todo(silent: false)
+        run_process(command: 'rubocop -a', silent: silent)
+        run_process(command: 'rubocop --auto-gen-config', silent: silent)
+      end
+
+      def ensure_rubosync_config
         unless File.exist?('.rubosync.yml')
           raise 'Missing configuration file! Please add and configure .rubosync.yml'
         end
         @config = YAML.safe_load(ERB.new(File.read('.rubosync.yml')).result, [], [], true)
       end
 
-      def fetch_rubocop_common
+      def rubosync_common
         unless @config && @config['git'] && @config['git']['repo']
           raise 'Missing git repo in configuration! Please configure .rubosync.yml'
         end
