@@ -24,17 +24,14 @@ module RubocopRules
       desc 'init', 'Initialize RubocopRules in your project'
       def init
         puts 'Copying config... '
-        copy_file '.rubosync.yml', '.rubosync.yml'
-        copy_file '.rubocop.yml', '.rubocop.yml'
+        copy_file 'templates/.rubosync.yml', '.rubosync.yml'
+        copy_file 'templates/.rubocop.yml', '.rubocop.yml'
         copy_file 'spec/lint_spec.rb', 'spec/lint_spec.rb'
 
-        ensure_config
         fetch_rubocop_common
 
-        print 'Autocorrecting your code... '
+        print 'Generating rubocop_todo...'
         run_process(command: 'rubocop -a')
-
-        print 'Generating rubocop_todo... '
         run_process(command: 'rubocop --auto-gen-config')
 
         puts 'Adding rubocop_todo to configuration... '
@@ -48,7 +45,7 @@ module RubocopRules
         remove_file '.rubocop_common.yml'
         fetch_rubocop_common
 
-        puts 'Regenerating rubocop_todo... '
+        puts 'Regenerating rubocop_todo...'
         remove_file '.rubocop_todo.yml'
         comment_lines '.rubocop.yml', /\.rubocop_todo\.yml/
         run_process(command: 'rubocop -a', silent: true)
@@ -59,12 +56,16 @@ module RubocopRules
       private
 
       def ensure_config
-        raise 'Missing configuration file! Please add and configure .rubosync.yml' unless File.exists?('.rubosync.yml')
+        unless File.exist?('.rubosync.yml')
+          raise 'Missing configuration file! Please add and configure .rubosync.yml'
+        end
         @config = YAML.safe_load(ERB.new(File.read('.rubosync.yml')).result, [], [], true)
       end
 
       def fetch_rubocop_common
-        raise 'Missing git repo in configuration! Please configure .rubosync.yml' unless @config && @config['git'] && @config['git']['repo']
+        unless @config && @config['git'] && @config['git']['repo']
+          raise 'Missing git repo in configuration! Please configure .rubosync.yml'
+        end
         repo = @config['git']['repo']
 
         puts "Downloading latest configuration from #{repo}..."
