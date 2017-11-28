@@ -2,4 +2,12 @@ sudo: false
 language: ruby
 rvm:
   - 2.4.1
-before_install: gem install bundler -v 1.15.4
+before_install: gem install bundler -v 1.16
+script:
+  - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
+  - export BRANCH2=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}
+  - echo '----------'
+  - echo $BRANCH
+  - echo '=========='
+  - echo $BRANCH2
+  - echo '----------'
