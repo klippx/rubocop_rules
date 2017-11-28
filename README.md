@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/klippx/rubocop_rules.svg?branch=master)](https://travis-ci.org/klippx/rubocop_rules)
 
-# RubocopRules
+# Rubocop::Rules
 
 A common place to house rubocop rule enforcement across projects.
 
@@ -40,14 +40,17 @@ Adding rubocop_todo to configuration...
       insert  .rubocop.yml
 ```
 
-This will create `.rubocop.yml` and `rubucop_common.yml`, it will then run `rubucop -a` to automatically fix what can be fixed for you.
-In addition to this it will create `rubucop_todo.yml` to put what cannot be fixed in quarantine for you to fix later.
+This will create `.rubocop.yml` and `rubucop_common.yml`, it will then run `rubucop -a` to
+automatically fix what can be fixed for you. In addition to this it will create `rubucop_todo.yml`
+to put what cannot be fixed in quarantine for you to fix later.
 
 Finally, a linter spec to make sure your code is following the common conventions.
 
 ### Updating a project
 
-Whenever a new version of the gem is deployed, you may update your project configuration using the command: `rubocop-rules update`. This command will get a fresh copy of `rubucop_common.yml`, it will run autofixes and regenerate a new `rubucop_todo.yml` for you, sample output:
+Whenever a new version of the gem is deployed, you may update your project configuration using the
+command: `rubocop-rules update`. This command will get a fresh copy of `rubucop_common.yml`, it will
+run autofixes and regenerate a new `rubucop_todo.yml` for you, sample output:
 
 ```shell
 $ rubocop-rules update
