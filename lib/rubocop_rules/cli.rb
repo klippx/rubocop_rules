@@ -29,6 +29,7 @@ module RubocopRules
         copy_file 'spec/lint_spec.rb', 'spec/lint_spec.rb'
 
         ensure_config
+        fetch_rubocop_common
 
         print 'Autocorrecting your code... '
         run_process(command: 'rubocop -a')
@@ -42,6 +43,7 @@ module RubocopRules
 
       desc 'update', 'Regenerate RubocopRules configuration in your project'
       def update
+        puts 'Recreating configuration...'
         ensure_config
         remove_file '.rubocop_common.yml'
         fetch_rubocop_common
