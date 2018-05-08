@@ -7,6 +7,12 @@ adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.1.1] - 2018-05-08
+
+### Changed
+
+* Do not lock rubocop version
+
 ## [1.1.0] - 2017-11-28
 
 ### Added
