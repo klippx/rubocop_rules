@@ -116,4 +116,4 @@ Keep this to a minimum and always consider if it belongs in .rubocop_common.yml 
 
 ## Development
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/klarna/rubocop_rules.
+Bug reports and pull requests are welcome on GitHub at https://github.com/klippx/rubocop_rules.
