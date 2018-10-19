@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'thor'
 require 'open3'
 require 'git'
