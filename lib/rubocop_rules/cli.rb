@@ -63,6 +63,7 @@ module RubocopRules
         unless File.exist?('.rubosync.yml')
           raise 'Missing configuration file! Please add and configure .rubosync.yml'
         end
+
         @config = YAML.safe_load(ERB.new(File.read('.rubosync.yml')).result, [], [], true)
       end
 
@@ -70,6 +71,7 @@ module RubocopRules
         unless @config && @config['git'] && @config['git']['repo']
           raise 'Missing git repo in configuration! Please configure .rubosync.yml'
         end
+
         repo = @config['git']['repo']
 
         puts "Downloading latest configuration from #{repo}..."
