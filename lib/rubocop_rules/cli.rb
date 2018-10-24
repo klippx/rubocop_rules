@@ -23,7 +23,7 @@ module RubocopRules
         puts RubocopRules::VERSION
       end
 
-      desc 'init', 'Initialize RubocopRules in your project'
+      desc 'init', 'Initialize Rubocop Rules in your project'
       def init
         puts 'Copying config... '
         copy_file 'templates/.rubosync.yml', '.rubosync.yml'
@@ -40,7 +40,7 @@ module RubocopRules
         insert_into_file '.rubocop.yml', '  - .rubocop_todo.yml', after: "  - .rubocop_common.yml\n"
       end
 
-      desc 'update', 'Regenerate RubocopRules configuration in your project'
+      desc 'update', 'Regenerate Rubocop Rules configuration in your project'
       def update
         puts 'Recreating configuration...'
         ensure_rubosync_config
