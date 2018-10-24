@@ -7,6 +7,12 @@ adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.1.2] - 2018-10-24
+
+### Fixed
+
+* `.rubocop.yml` is generated correctly on update
+
 ## [1.1.1] - 2018-05-08
 
 ### Changed
