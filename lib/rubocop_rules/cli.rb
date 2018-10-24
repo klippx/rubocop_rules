@@ -52,22 +52,26 @@ module RubocopRules
         comment_lines '.rubocop.yml', /\.rubocop_todo\.yml/
         generate_todo(silent: true)
         uncomment_lines '.rubocop.yml', /\.rubocop_todo\.yml/
+        clean_up_rubocop_config
+      end
+
+      private
+
+      def clean_up_rubocop_config
         gsub_file '.rubocop.yml', all_inherit_lines_rex, ''
         insert_into_file '.rubocop.yml', todo_string_block, after: "# our violation whitelist.\n"
         gsub_file '.rubocop.yml', /^  - .rubocop_common.yml\n+/, "  - .rubocop_common.yml\n\n"
       end
-
-      private
 
       def all_inherit_lines_rex
         /(^inherit_from:\n)|(^  - .rubocop_common.yml\n+)|(^  - .rubocop_todo.yml\n+)/
       end
 
       def todo_string_block
-        <<-TODO
-inherit_from:
-  - .rubocop_todo.yml
-  - .rubocop_common.yml
+        <<~TODO
+          inherit_from:
+            - .rubocop_todo.yml
+            - .rubocop_common.yml
 
         TODO
       end
